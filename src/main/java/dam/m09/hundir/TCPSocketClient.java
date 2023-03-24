@@ -78,6 +78,6 @@ public class TCPSocketClient{
 
     public static void main(String[] args) {
         TCPSocketClient client = new TCPSocketClient();
-        client.connect("localhost",9090);
+        client.connect("192.168.22.111",9090);
     }
 }
