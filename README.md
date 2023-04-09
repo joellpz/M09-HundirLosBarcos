@@ -15,3 +15,7 @@ Tipos de Barcos:
 - Clase Barco:
   - Comprobar si barco ha sido tocado.
   - Comprobar si barco ha sido undido.
+- Clase Board (tablero):
+  - Mostrar Tablero
+  - Metodo para realizar peticion a barcos por si són tocados.
+  - 
