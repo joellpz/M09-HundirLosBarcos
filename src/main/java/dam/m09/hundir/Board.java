@@ -25,8 +25,7 @@ public class Board {
                     new Boat(2, new ArrayList<>(Arrays.asList("f5", "f6"))),
                     new Boat(2, new ArrayList<>(Arrays.asList("d6", "d7"))),
                     new Boat(2, new ArrayList<>(Arrays.asList("a7", "a8"))),
-                    new Boat(1, new ArrayList<>(Arrays.asList("g8")))
-            ));
+                    new Boat(1, new ArrayList<>(Arrays.asList("g8")))));
             case 1 -> barcos = new ArrayList<>(List.of(
                     new Boat(5, new ArrayList<>(Arrays.asList("c5", "d5", "e5", "f5", "g5"))),
                     new Boat(4, new ArrayList<>(Arrays.asList("c4", "d4", "e4", "f4"))),
@@ -47,6 +46,19 @@ public class Board {
                     new Boat(2, new ArrayList<>(Arrays.asList("f6", "f7"))),
                     new Boat(1, new ArrayList<>(Arrays.asList("h1")))
             ));
+        }
+    }
+
+    public void showBoardNoBoats(){
+        System.out.println("|---|---|---|---|---|---|---|---|");
+        for (int i = 0; i < board.length; i++) {
+
+            for (int j = 0; j < board.length; j++) {
+                if (board[i][j] == null) System.out.print("|   ");
+                else System.out.print("| "+board[i][j] +" ");
+            }
+            System.out.println("|");
+            System.out.println("|---|---|---|---|---|---|---|---|");
         }
     }
 }
