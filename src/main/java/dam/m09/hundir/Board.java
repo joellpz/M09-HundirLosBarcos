@@ -6,12 +6,11 @@ import java.util.List;
 import java.util.Random;
 
 public class Board {
-    int [][] board = new int[8][8];
+    String [][] board = new String[8][8];
     /* El tablero se define por 4 posibles valores en cada posición.
-     0. Indica que esa casilla esta vacia.
-     1. Indica posicion ocupada por barco.
-     2. Indica posicion vacia ya marcada.
-     3. Indica barco tocado.
+     null. Indica que esa casilla esta vacia.
+     O. Indica posicion vacia ya marcada.
+     X. Indica barco tocado.
     */
     List<Boat> barcos;
 
@@ -50,16 +49,51 @@ public class Board {
         }
     }
 
-    public void showBoardNoBoats(){
-        System.out.println("|---|---|---|---|---|---|---|---|");
+    public void showBoardNoBoats() {
+        System.out.println("|-A-|-B-|-C-|-D-|-E-|-F-|-G-|-H-|");
         for (int i = 0; i < board.length; i++) {
 
             for (int j = 0; j < board.length; j++) {
                 if (board[i][j] == null) System.out.print("|   ");
-                else System.out.print("| "+board[i][j] +" ");
+                else System.out.print("| " + board[i][j] + " ");
             }
             System.out.println("|");
             System.out.println("|---|---|---|---|---|---|---|---|");
         }
     }
+
+    public void input(String pos) {
+        if (!checkIfBoat(pos)) board[traducePos(pos.split("")[0])][Integer.parseInt(pos.split("")[0])];
+    }
+
+    public boolean checkIfBoat(String pos) {
+        for (Boat boat : barcos) {
+            if (boat.isTouched(pos)) return true;
+        }
+        return false;
+    }
+
+    private int traducePos(String posLetter) {
+        switch (posLetter) {
+            case "A":
+                return 0;
+            case "B":
+                return 1;
+            case "C":
+                return 2;
+            case "D":
+                return 3;
+            case "E":
+                return 4;
+            case "F":
+                return 5;
+            case "G":
+                return 6;
+            case "H":
+                return 7;
+            default:
+                return -1;
+        }
+    }
+
 }
