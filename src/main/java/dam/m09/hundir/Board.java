@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 public class Board {
-    String [][] board = new String[8][8];
+    String[][] board = new String[8][8];
     /* El tablero se define por 4 posibles valores en cada posición.
      null. Indica que esa casilla esta vacia.
      O. Indica posicion vacia ya marcada.
@@ -63,7 +63,8 @@ public class Board {
     }
 
     public void input(String pos) {
-        if (!checkIfBoat(pos)) board[traducePos(pos.split("")[0])][Integer.parseInt(pos.split("")[0])];
+        if (!checkIfBoat(pos)) board[traducePos(pos.split("")[0])][Integer.parseInt(pos.split("")[0])] = "O";
+        else board[traducePos(pos.split("")[0])][Integer.parseInt(pos.split("")[0])] = "X";
     }
 
     public boolean checkIfBoat(String pos) {
