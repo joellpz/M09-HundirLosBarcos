@@ -25,7 +25,8 @@ public class Board {
                     new Boat(2, new ArrayList<>(Arrays.asList("f5", "f6"))),
                     new Boat(2, new ArrayList<>(Arrays.asList("d6", "d7"))),
                     new Boat(2, new ArrayList<>(Arrays.asList("a7", "a8"))),
-                    new Boat(1, new ArrayList<>(Arrays.asList("g8")))));
+                    new Boat(1, new ArrayList<>(Arrays.asList("g8")))
+            ));
             case 1 -> barcos = new ArrayList<>(List.of(
                     new Boat(5, new ArrayList<>(Arrays.asList("c5", "d5", "e5", "f5", "g5"))),
                     new Boat(4, new ArrayList<>(Arrays.asList("c4", "d4", "e4", "f4"))),
