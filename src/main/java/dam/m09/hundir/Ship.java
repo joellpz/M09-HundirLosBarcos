@@ -3,13 +3,13 @@ package dam.m09.hundir;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Boat {
+public class Ship {
     int length;
     List<String> positions;
     List<Boolean> touched;
     boolean destroyed;
 
-    public Boat(int length, List<String> positions) {
+    public Ship(int length, List<String> positions) {
         this.length = length;
         this.positions = positions;
         touched = new ArrayList<>();

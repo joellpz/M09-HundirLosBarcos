@@ -12,39 +12,40 @@ public class Board {
      O. Indica posicion vacia ya marcada.
      X. Indica barco tocado.
     */
-    List<Boat> barcos;
+    List<Ship> ships;
+    boolean fin, touched;
 
     public Board() {
         switch (new Random().nextInt(3)) {
-            case 0 -> barcos = new ArrayList<>(List.of(
-                    new Boat(5, new ArrayList<>(Arrays.asList("a1", "b1", "c1", "d1", "e1"))),
-                    new Boat(4, new ArrayList<>(Arrays.asList("b3", "b4", "b5", "b6"))),
-                    new Boat(3, new ArrayList<>(Arrays.asList("d3", "e3", "f3"))),
-                    new Boat(3, new ArrayList<>(Arrays.asList("h3", "h4", "h5"))),
-                    new Boat(2, new ArrayList<>(Arrays.asList("f5", "f6"))),
-                    new Boat(2, new ArrayList<>(Arrays.asList("d6", "d7"))),
-                    new Boat(2, new ArrayList<>(Arrays.asList("a7", "a8"))),
-                    new Boat(1, new ArrayList<>(Arrays.asList("g8")))
+            case 0 -> ships = new ArrayList<>(List.of(
+                    new Ship(5, new ArrayList<>(Arrays.asList("a1", "b1", "c1", "d1", "e1"))),
+                    new Ship(4, new ArrayList<>(Arrays.asList("b3", "b4", "b5", "b6"))),
+                    new Ship(3, new ArrayList<>(Arrays.asList("d3", "e3", "f3"))),
+                    new Ship(3, new ArrayList<>(Arrays.asList("h3", "h4", "h5"))),
+                    new Ship(2, new ArrayList<>(Arrays.asList("f5", "f6"))),
+                    new Ship(2, new ArrayList<>(Arrays.asList("d6", "d7"))),
+                    new Ship(2, new ArrayList<>(Arrays.asList("a7", "a8"))),
+                    new Ship(1, new ArrayList<>(Arrays.asList("g8")))
             ));
-            case 1 -> barcos = new ArrayList<>(List.of(
-                    new Boat(5, new ArrayList<>(Arrays.asList("c5", "d5", "e5", "f5", "g5"))),
-                    new Boat(4, new ArrayList<>(Arrays.asList("c4", "d4", "e4", "f4"))),
-                    new Boat(3, new ArrayList<>(Arrays.asList("c3", "d3", "e3"))),
-                    new Boat(3, new ArrayList<>(Arrays.asList("b5", "b6", "b7"))),
-                    new Boat(2, new ArrayList<>(Arrays.asList("a1", "b1"))),
-                    new Boat(2, new ArrayList<>(Arrays.asList("g1", "h1"))),
-                    new Boat(2, new ArrayList<>(Arrays.asList("e7", "f7"))),
-                    new Boat(1, new ArrayList<>(Arrays.asList("f6")))
+            case 1 -> ships = new ArrayList<>(List.of(
+                    new Ship(5, new ArrayList<>(Arrays.asList("c5", "d5", "e5", "f5", "g5"))),
+                    new Ship(4, new ArrayList<>(Arrays.asList("c4", "d4", "e4", "f4"))),
+                    new Ship(3, new ArrayList<>(Arrays.asList("c3", "d3", "e3"))),
+                    new Ship(3, new ArrayList<>(Arrays.asList("b5", "b6", "b7"))),
+                    new Ship(2, new ArrayList<>(Arrays.asList("a1", "b1"))),
+                    new Ship(2, new ArrayList<>(Arrays.asList("g1", "h1"))),
+                    new Ship(2, new ArrayList<>(Arrays.asList("e7", "f7"))),
+                    new Ship(1, new ArrayList<>(Arrays.asList("f6")))
             ));
-            case 2 -> barcos = new ArrayList<>(List.of(
-                    new Boat(5, new ArrayList<>(Arrays.asList("a1", "a2", "a3", "a4", "a5"))),
-                    new Boat(4, new ArrayList<>(Arrays.asList("b3", "b4", "b5", "b6"))),
-                    new Boat(3, new ArrayList<>(Arrays.asList("c1", "c2", "c3"))),
-                    new Boat(3, new ArrayList<>(Arrays.asList("f4", "g4", "h4"))),
-                    new Boat(2, new ArrayList<>(Arrays.asList("d6", "d7"))),
-                    new Boat(2, new ArrayList<>(Arrays.asList("e3", "e4"))),
-                    new Boat(2, new ArrayList<>(Arrays.asList("f6", "f7"))),
-                    new Boat(1, new ArrayList<>(Arrays.asList("h1")))
+            case 2 -> ships = new ArrayList<>(List.of(
+                    new Ship(5, new ArrayList<>(Arrays.asList("a1", "a2", "a3", "a4", "a5"))),
+                    new Ship(4, new ArrayList<>(Arrays.asList("b3", "b4", "b5", "b6"))),
+                    new Ship(3, new ArrayList<>(Arrays.asList("c1", "c2", "c3"))),
+                    new Ship(3, new ArrayList<>(Arrays.asList("f4", "g4", "h4"))),
+                    new Ship(2, new ArrayList<>(Arrays.asList("d6", "d7"))),
+                    new Ship(2, new ArrayList<>(Arrays.asList("e3", "e4"))),
+                    new Ship(2, new ArrayList<>(Arrays.asList("f6", "f7"))),
+                    new Ship(1, new ArrayList<>(Arrays.asList("h1")))
             ));
         }
     }
@@ -63,15 +64,25 @@ public class Board {
     }
 
     public void input(String pos) {
-        if (!checkIfBoat(pos)) board[traducePos(pos.split("")[0])][Integer.parseInt(pos.split("")[0])] = "O";
+        if (!(touched = checkIfBoat(pos))){
+            board[traducePos(pos.split("")[0])][Integer.parseInt(pos.split("")[0])] = "O";
+            fin = isFinished();
+        }
         else board[traducePos(pos.split("")[0])][Integer.parseInt(pos.split("")[0])] = "X";
     }
 
     public boolean checkIfBoat(String pos) {
-        for (Boat boat : barcos) {
-            if (boat.isTouched(pos)) return true;
+        for (Ship ship : ships) {
+            if (ship.isTouched(pos)) return true;
         }
         return false;
+    }
+
+    public boolean isFinished() {
+        for (Ship ship : ships) {
+            if (!ship.isDestroyed()) return false;
+        }
+        return true;
     }
 
     private int traducePos(String posLetter) {
