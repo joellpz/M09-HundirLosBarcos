@@ -1,11 +1,12 @@
 package dam.m09.hundir;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-public class Board {
+public class Board implements Serializable {
     String[][] board = new String[8][8];
     /* El tablero se define por 4 posibles valores en cada posición.
      null. Indica que esa casilla esta vacia.
@@ -64,11 +65,10 @@ public class Board {
     }
 
     public void input(String pos) {
-        if (!(touched = checkIfBoat(pos))){
-            board[traducePos(pos.split("")[0])][Integer.parseInt(pos.split("")[0])] = "O";
+        if (!(touched = checkIfBoat(pos))) {
+            board[Integer.parseInt(pos.split("")[1])][traducePos(pos.split("")[0])] = "O";
             fin = isFinished();
-        }
-        else board[traducePos(pos.split("")[0])][Integer.parseInt(pos.split("")[0])] = "X";
+        } else board[Integer.parseInt(pos.split("")[1])][traducePos(pos.split("")[0])] = "X";
     }
 
     public boolean checkIfBoat(String pos) {
@@ -86,15 +86,15 @@ public class Board {
     }
 
     private int traducePos(String posLetter) {
-        return switch (posLetter) {
-            case "A" -> 0;
-            case "B" -> 1;
-            case "C" -> 2;
-            case "D" -> 3;
-            case "E" -> 4;
-            case "F" -> 5;
-            case "G" -> 6;
-            case "H" -> 7;
+        return switch (posLetter.toLowerCase()) {
+            case "a" -> 0;
+            case "b" -> 1;
+            case "c" -> 2;
+            case "d" -> 3;
+            case "e" -> 4;
+            case "f" -> 5;
+            case "g" -> 6;
+            case "h" -> 7;
             default -> -1;
         };
     }
