@@ -16,8 +16,8 @@ public class Board implements Serializable {
     List<Ship> ships;
     boolean fin, touched;
 
-    public Board() {
-        switch (new Random().nextInt(3)) {
+    public Board(int num) {
+        switch (num) {
             case 0 -> ships = new ArrayList<>(List.of(
                     new Ship(5, new ArrayList<>(Arrays.asList("a1", "b1", "c1", "d1", "e1"))),
                     new Ship(4, new ArrayList<>(Arrays.asList("b3", "b4", "b5", "b6"))),
@@ -25,8 +25,8 @@ public class Board implements Serializable {
                     new Ship(3, new ArrayList<>(Arrays.asList("h3", "h4", "h5"))),
                     new Ship(2, new ArrayList<>(Arrays.asList("f5", "f6"))),
                     new Ship(2, new ArrayList<>(Arrays.asList("d6", "d7"))),
-                    new Ship(2, new ArrayList<>(Arrays.asList("a7", "a8"))),
-                    new Ship(1, new ArrayList<>(Arrays.asList("g8")))
+                    new Ship(2, new ArrayList<>(Arrays.asList("a6", "a7"))),
+                    new Ship(1, new ArrayList<>(Arrays.asList("g7")))
             ));
             case 1 -> ships = new ArrayList<>(List.of(
                     new Ship(5, new ArrayList<>(Arrays.asList("c5", "d5", "e5", "f5", "g5"))),
@@ -54,7 +54,7 @@ public class Board implements Serializable {
     public void showBoardNoBoats() {
         System.out.println("|-A-|-B-|-C-|-D-|-E-|-F-|-G-|-H-|");
         for (int i = 0; i < board.length; i++) {
-
+            System.out.println("| "+i+" ");
             for (int j = 0; j < board.length; j++) {
                 if (board[i][j] == null) System.out.print("|   ");
                 else System.out.print("| " + board[i][j] + " ");
