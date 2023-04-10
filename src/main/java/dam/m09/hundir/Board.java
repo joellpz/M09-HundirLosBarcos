@@ -25,8 +25,8 @@ public class Board implements Serializable {
                     new Ship(3, new ArrayList<>(Arrays.asList("h3", "h4", "h5"))),
                     new Ship(2, new ArrayList<>(Arrays.asList("f5", "f6"))),
                     new Ship(2, new ArrayList<>(Arrays.asList("d6", "d7"))),
-                    new Ship(2, new ArrayList<>(Arrays.asList("a7", "a8"))),
-                    new Ship(1, new ArrayList<>(Arrays.asList("g8")))
+                    new Ship(2, new ArrayList<>(Arrays.asList("a6", "a7"))),
+                    new Ship(1, new ArrayList<>(Arrays.asList("g7")))
             ));
             case 1 -> ships = new ArrayList<>(List.of(
                     new Ship(5, new ArrayList<>(Arrays.asList("c5", "d5", "e5", "f5", "g5"))),
