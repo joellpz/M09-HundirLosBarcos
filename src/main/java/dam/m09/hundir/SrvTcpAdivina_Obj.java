@@ -20,8 +20,8 @@ public class SrvTcpAdivina_Obj {
     }
 
     private void listen() {
-        ServerSocket serverSocket = null;
-        Socket clientSocket = null;
+        ServerSocket serverSocket;
+        Socket clientSocket;
         try {
             serverSocket = new ServerSocket(port);
             while(true) {

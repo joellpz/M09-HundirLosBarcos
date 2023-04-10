@@ -39,6 +39,7 @@ public class ThreadSevidorAdivina_Obj implements Runnable {
                     e.printStackTrace();
                 }
 
+                board.input(jugada);
 
             }
         }catch(IOException e){
