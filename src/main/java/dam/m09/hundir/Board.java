@@ -1,11 +1,12 @@
 package dam.m09.hundir;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-public class Board {
+public class Board implements Serializable {
     String[][] board = new String[8][8];
     /* El tablero se define por 4 posibles valores en cada posición.
      null. Indica que esa casilla esta vacia.
