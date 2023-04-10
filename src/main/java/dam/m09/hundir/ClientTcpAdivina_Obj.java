@@ -7,6 +7,7 @@ import java.net.UnknownHostException;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.*;
 
 public class ClientTcpAdivina_Obj extends Thread {
     /* CLient TCP que ha endevinar un número pensat per SrvTcpAdivina_Obj.java */
@@ -18,6 +19,8 @@ public class ClientTcpAdivina_Obj extends Thread {
     private boolean continueConnected;
     private Board board;
     private boolean firstTry = true;
+    Pattern pattern = Pattern.compile("[a-h][0-7]");
+    Matcher matcher;
 
     private ClientTcpAdivina_Obj(String hostname, int port) {
         try {
@@ -36,6 +39,7 @@ public class ClientTcpAdivina_Obj extends Thread {
 
     public void run() {
         String msg = null;
+        boolean ok;
         while(continueConnected){
             //Llegir info del servidor (estat del board)
             board = getRequest();
@@ -61,8 +65,17 @@ public class ClientTcpAdivina_Obj extends Thread {
             board.showBoardNoBoats();
 
             //Pedir una posicion
-            System.out.print("Quina posició del taulell vols atacar? Ex. (a1): ");
-            msg = scin.next();
+            do {
+                System.out.print("Quina posició del taulell vols atacar? Ex. (a1): ");
+
+                //Comproba si s'escull una posició correcte
+                msg = scin.next();
+                matcher = pattern.matcher(msg);
+
+                //Comproba si s'escull una posició ja marcada
+                if (matcher.matches() || board.posRepetida(msg)) ok = true;
+                else ok = false;
+            } while(ok);
 
             try {
                 ObjectOutputStream oos = new ObjectOutputStream(out);

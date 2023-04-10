@@ -52,15 +52,15 @@ public class Board implements Serializable {
     }
 
     public void showBoardNoBoats() {
-        System.out.println("|-A-|-B-|-C-|-D-|-E-|-F-|-G-|-H-|");
+        System.out.println("    |-A-|-B-|-C-|-D-|-E-|-F-|-G-|-H-|");
         for (int i = 0; i < board.length; i++) {
-            System.out.println("| "+i+" ");
+            System.out.print("| "+i+" ");
             for (int j = 0; j < board.length; j++) {
                 if (board[i][j] == null) System.out.print("|   ");
                 else System.out.print("| " + board[i][j] + " ");
             }
             System.out.println("|");
-            System.out.println("|---|---|---|---|---|---|---|---|");
+            System.out.println("|---|---|---|---|---|---|---|---|---|");
         }
     }
 
@@ -99,4 +99,8 @@ public class Board implements Serializable {
         };
     }
 
+    public boolean posRepetida(String pos) {
+        if(board[Integer.parseInt(pos.split("")[1])][traducePos(pos.split("")[0])] == "") return false;
+        else return true;
+    }
 }
