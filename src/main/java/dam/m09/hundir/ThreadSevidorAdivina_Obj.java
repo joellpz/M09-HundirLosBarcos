@@ -5,7 +5,6 @@ import java.net.Socket;
 
 public class ThreadSevidorAdivina_Obj implements Runnable {
     /* Thread que gestiona la comunicació de SrvTcPAdivina_Obj.java i un cllient ClientTcpAdivina_Obj.java */
-
     private Socket clientSocket;
     private InputStream in;
     private OutputStream out;
@@ -40,7 +39,6 @@ public class ThreadSevidorAdivina_Obj implements Runnable {
                 }
 
                 board.input(jugada);
-
             }
         }catch(IOException e){
             System.out.println(e.getLocalizedMessage());

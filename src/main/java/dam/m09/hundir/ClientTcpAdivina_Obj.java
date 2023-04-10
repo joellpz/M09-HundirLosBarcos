@@ -10,7 +10,6 @@ import java.util.logging.Logger;
 
 public class ClientTcpAdivina_Obj extends Thread {
     /* CLient TCP que ha endevinar un número pensat per SrvTcpAdivina_Obj.java */
-
     private String Nom;
     private Socket socket;
     private InputStream in;
@@ -18,6 +17,7 @@ public class ClientTcpAdivina_Obj extends Thread {
     private Scanner scin;
     private boolean continueConnected;
     private Board board;
+    private boolean firstTry = true;
 
     private ClientTcpAdivina_Obj(String hostname, int port) {
         try {
@@ -40,38 +40,38 @@ public class ClientTcpAdivina_Obj extends Thread {
             //Llegir info del servidor (estat del board)
             board = getRequest();
 
-            //Crear codi de resposta a missatge
-            switch (board.resultat) {
-                case 3:	msg = "Benvingut al joc " + Nom + " - " + board.getNumPlayers(); break;
-                case 2:	msg = "Més gran"; break;
-                case 1: msg = "Més petit"; break;
-                case 0:
-                    System.out.println("Correcte");
-                    System.out.println(board);
-                    continueConnected = false;
-                    continue;
-            }
-            System.out.println(msg);
-            System.out.println(board);
+            if(firstTry){
+                System.out.println("Comença la partida!");
+            }else{
+                //Llegir condicions
+                if(board.touched){
+                    System.out.println("Has tocat un vaixell!");
+                }else{
+                    System.out.println("No s'ha tocat cap vaixell...");
+                }
 
-            if(board.resultat != 0) {
-                System.out.println("Entra un número: ");
-                j.num = scin.nextInt();
-                j.Nom = Nom;
-                try {
-                    ObjectOutputStream oos = new ObjectOutputStream(out);
-                    oos.writeObject(j);
-                    out.flush();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                if(board.fin){
+                    System.out.println("S'ha acabat la partida! Tots els vaixells s'han enfonsat!");
+                    continueConnected = false;
                 }
             }
 
+            //Mostrar el tablero al cliente
+            board.showBoardNoBoats();
 
+            //Pedir una posicion
+            System.out.print("Quina posició del taulell vols atacar? Ex. (a1): ");
+            msg = scin.next();
+
+            try {
+                ObjectOutputStream oos = new ObjectOutputStream(out);
+                oos.writeObject(msg);
+                out.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-
         close(socket);
-
     }
     private Board getRequest() {
         try {
