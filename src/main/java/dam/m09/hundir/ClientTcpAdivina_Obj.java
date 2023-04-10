@@ -42,6 +42,7 @@ public class ClientTcpAdivina_Obj extends Thread {
 
             if(firstTry){
                 System.out.println("Comença la partida!");
+                firstTry = false;
             }else{
                 //Llegir condicions
                 if(board.touched){
