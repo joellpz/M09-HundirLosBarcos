@@ -51,10 +51,10 @@ public class SrvTcpAdivina_Obj {
         String opt;
         SrvTcpAdivina_Obj srv;
         do {
-            System.out.println("Do you want to define the ships (D) or a random board (R)");
+            System.out.println("Vols definir els vaixells (D) o un taulell aleatori (R)");
             opt = sc.nextLine();
             if (!opt.equalsIgnoreCase("D") && !opt.equalsIgnoreCase("R")) {
-                System.out.println(" ** ERROR. BAD ARGUMENT, Try again! **");
+                System.out.println(" ** ARGUMENT ERRONI, Torna a intentar! ** ");
             }
         } while (!opt.equalsIgnoreCase("D") && !opt.equalsIgnoreCase("R"));
 

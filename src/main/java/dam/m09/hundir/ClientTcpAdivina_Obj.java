@@ -73,8 +73,11 @@ public class ClientTcpAdivina_Obj extends Thread {
                 matcher = pattern.matcher(msg);
 
                 //Comproba si s'escull una posició ja marcada
-                if (!matcher.matches() || board.posRepetida(msg)) rep = true;
-                else rep = false;
+                if (!matcher.matches() || board.posRepetida(msg)) {
+                    rep = true;
+                    if(!matcher.matches()) System.out.println(" ** Escriu la posició amb el format indicat a l'exemple ** ");
+                    else System.out.println(" ** Escriu una posició no seleccionada anteriorment ** ");
+                }else rep = false;
             } while(rep);
 
             try {
@@ -91,9 +94,7 @@ public class ClientTcpAdivina_Obj extends Thread {
         try {
             ObjectInputStream ois = new ObjectInputStream(in);
             board = (Board) ois.readObject();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (ClassNotFoundException | IOException e) {
             e.printStackTrace();
         }
         return board;

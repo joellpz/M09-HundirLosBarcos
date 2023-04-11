@@ -72,7 +72,7 @@ public class Board implements Serializable {
                 showBoardWithBoats();
                 do {
                     rep = false;
-                    System.out.println(" ** Define the orientation of the ship (H/V) ** ");
+                    System.out.println(" ** Defineix la orientació del vaixell (H/V) ** ");
                     orient = sc.nextLine();
                     if (!orient.equalsIgnoreCase("H") && !orient.equalsIgnoreCase("V")) {
 
@@ -82,15 +82,15 @@ public class Board implements Serializable {
                 do {
                     rep = false;
 
-                    System.out.println(" ** Write the Column to put the Ship (length:" + (i + 1) + ") **");
+                    System.out.println(" ** Escriu la columna on col·locar el vaixeill (length:" + (i + 1) + ") **");
                     letter = sc.nextLine();
                     if (!letter.equalsIgnoreCase("a") && !letter.equalsIgnoreCase("b") && !letter.equalsIgnoreCase("c") &&
                             !letter.equalsIgnoreCase("d") && !letter.equalsIgnoreCase("e") && !letter.equalsIgnoreCase("f") &&
                             !letter.equalsIgnoreCase("g") && !letter.equalsIgnoreCase("h")) {
-                        System.out.println(" ** ERROR. BAD ARGUMENT, Try again! **");
+                        System.out.println(" ** ARGUMENT ERRONI, Torna a intentar! ** ");
                         rep = true;
                     } else {
-                        System.out.println(" ** Write the Row to put the Ship **");
+                        System.out.println(" ** Escriu la fila on col·locar el vaixell **");
                         try {
                             number = Integer.parseInt(sc.nextLine());
 
@@ -101,7 +101,7 @@ public class Board implements Serializable {
                                 throw new Exception();
                             }
                         } catch (Exception e) {
-                            System.out.println(" ** ERROR. BAD ARGUMENT, Try again! **");
+                            System.out.println(" ** ARGUMENT ERRONI, Torna a intentar! ** ");
                             rep = true;
                         }
 
@@ -246,7 +246,7 @@ public class Board implements Serializable {
     }
 
     public boolean posRepetida(String pos) {
-        if (board[Integer.parseInt(pos.split("")[1])][traduceLetter(pos.split("")[0])] == "") return false;
+        if (board[Integer.parseInt(pos.split("")[1])][traduceLetter(pos.split("")[0])] == null) return false;
         else return true;
     }
 }
