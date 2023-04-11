@@ -8,6 +8,7 @@ import java.util.Scanner;
 
 public class Board implements Serializable {
     String[][] board = new String[8][8];
+
     /* El tablero se define por 4 posibles valores en cada posición.
      null. Indica que esa casilla esta vacia.
      O. Indica posicion vacia ya marcada.
@@ -54,6 +55,7 @@ public class Board implements Serializable {
     }
 
     public Board() {
+        ships = new ArrayList<>();
         fin = false;
         touched = false;
         buildBoard();
@@ -62,9 +64,9 @@ public class Board implements Serializable {
     public void buildBoard() {
         Scanner sc = new Scanner(System.in);
         String orient, letter, pos;
-        int number;
+        int number = 0;
         boolean rep;
-        int[] lenghts = new int[]{1, 3, 2, 1, 5};
+        int[] lenghts = new int[]{1, 3, 2, 1, 1};
         for (int i = 0; i < lenghts.length; i++) {
             for (int j = 0; j < lenghts[i]; j++) {
                 do {
@@ -78,8 +80,8 @@ public class Board implements Serializable {
                 } while (rep);
                 do {
                     rep = false;
-                    showBoardNoBoats();
-                    System.out.println(" ** Write the Column to put the Ship **");
+                    showBoardWithBoats();
+                    System.out.println(" ** Write the Column to put the Ship (length:" + (i + 1) + ") **");
                     letter = sc.nextLine();
                     if (!letter.equalsIgnoreCase("a") && !letter.equalsIgnoreCase("b") && !letter.equalsIgnoreCase("c") &&
                             !letter.equalsIgnoreCase("d") && !letter.equalsIgnoreCase("e") && !letter.equalsIgnoreCase("f") &&
@@ -89,11 +91,14 @@ public class Board implements Serializable {
                     } else {
                         System.out.println(" ** Write the Row to put the Ship **");
                         try {
-                            number = sc.nextInt();
-                            if (number < 1 && number > 8){
+                            number = Integer.parseInt(sc.nextLine());
+
+                            if (number < 0 || number > 7) {
                                 throw new NumberFormatException();
                             }
-                            ubicarShip(new Ship(i), letter.concat(number+""),orient);
+                            if (!ubicarShip(new Ship(i + 1), letter.concat(number + ""), orient)){
+                                throw new Exception();
+                            }
                         } catch (Exception e) {
                             System.out.println(" ** ERROR. BAD ARGUMENT, Try again! **");
                             rep = true;
@@ -112,45 +117,41 @@ public class Board implements Serializable {
         column = traduceLetter(pos);
         row = getRow(pos);
 
-        if (ship.getPositions().size() != 0) {
 
-            if (orientation == "H") {
-                if (column + ship.getLength() > board.length) {
-                    return false;
-                }
-            } else if (orientation == "V") {
-                if (row + ship.getLength() > board.length) {
-                    return false;
-                }
+        if (orientation.equalsIgnoreCase("H")) {
+            if ((column + ship.getLength()) > board.length) {
+                return false;
             }
-
-            // Verificamos que no haya otro Ship en la ubicación deseada
-            for (int i = 0; i < ship.getLength(); i++) {
-                if (orientation == "H") {
-                    if (board[row][column + i] != null) {
-                        return false;
-                    }
-                } else if (orientation == "V") {
-                    if (board[row + i][column] != null) {
-                        return false;
-                    }
-                }
+        } else if (orientation.equalsIgnoreCase("V")) {
+            if ((row + ship.getLength()) > board.length) {
+                return false;
             }
-
-            // Si tod o está bien, ubicamos el Ship
-            List<String> positions = new ArrayList<>();
-            for (int i = 0; i < ship.getLength(); i++) {
-                if (orientation == "H") {
-                    positions.add(traduceNumber(column + i).concat(row + ""));
-                } else if (orientation == "V") {
-                    positions.add(traduceNumber(column).concat((row + i) + ""));
-                }
-            }
-            ship.setPositions(positions);
-            ships.add(ship);
-            return true;
         }
-        return false;
+
+        // Verificamos que no haya otro Ship en la ubicación deseada
+        for (int i = 0; i < ship.getLength(); i++) {
+            for (Ship boat : ships) {
+                if (orientation.equalsIgnoreCase("H")) {
+                    if (boat.getPositions().contains(traduceNumber(column + i).concat(row + ""))) return false;
+                } else if (orientation.equalsIgnoreCase("V")) {
+                    if (boat.getPositions().contains(traduceNumber(column).concat((row + i) + ""))) return false;
+                }
+            }
+        }
+
+        // Si tod o está bien, ubicamos el Ship
+        List<String> positions = new ArrayList<>();
+        for (int i = 0; i < ship.getLength(); i++) {
+            if (orientation.equalsIgnoreCase("H")) {
+                positions.add(traduceNumber(column + i).concat(row + ""));
+            } else if (orientation.equalsIgnoreCase("V")) {
+                positions.add(traduceNumber(column).concat((row + i) + ""));
+            }
+        }
+        ship.setPositions(positions);
+        ships.add(ship);
+        return true;
+
     }
 
 
@@ -161,6 +162,29 @@ public class Board implements Serializable {
             for (int j = 0; j < board.length; j++) {
                 if (board[i][j] == null) System.out.print("|   ");
                 else System.out.print("| " + board[i][j] + " ");
+            }
+            System.out.println("|");
+            System.out.println("|---|---|---|---|---|---|---|---|---|");
+        }
+    }
+
+    public void showBoardWithBoats() {
+        System.out.println("    |-A-|-B-|-C-|-D-|-E-|-F-|-G-|-H-|");
+        boolean active = false;
+        for (int i = 0; i < board.length; i++) {
+            System.out.print("| " + i + " ");
+            for (int j = 0; j < board.length; j++) {
+                if (ships.size() != 0) {
+                    active = false;
+                    for (Ship ship : ships) {
+                        if (ship.getPositions().contains(traduceNumber(j) + i)) {
+                            System.out.print("| X ");
+                            active = true;
+                            break;
+                        }
+                    }
+                }
+                if (board[i][j] == null && !active) System.out.print("|   ");
             }
             System.out.println("|");
             System.out.println("|---|---|---|---|---|---|---|---|---|");
@@ -204,14 +228,14 @@ public class Board implements Serializable {
 
     private String traduceNumber(int num) {
         return switch (num) {
-            case 1 -> "a";
-            case 2 -> "b";
-            case 3 -> "c";
-            case 4 -> "d";
-            case 5 -> "e";
-            case 6 -> "f";
-            case 7 -> "g";
-            case 8 -> "h";
+            case 0 -> "a";
+            case 1 -> "b";
+            case 2 -> "c";
+            case 3 -> "d";
+            case 4 -> "e";
+            case 5 -> "f";
+            case 6 -> "g";
+            case 7 -> "h";
             default -> "z";
         };
     }
