@@ -39,7 +39,7 @@ public class ClientTcpAdivina_Obj extends Thread {
 
     public void run() {
         String msg = null;
-        boolean ok;
+        boolean rep;
         while(continueConnected){
             //Llegir info del servidor (estat del board)
             board = getRequest();
@@ -73,9 +73,9 @@ public class ClientTcpAdivina_Obj extends Thread {
                 matcher = pattern.matcher(msg);
 
                 //Comproba si s'escull una posició ja marcada
-                if (matcher.matches() || board.posRepetida(msg)) ok = true;
-                else ok = false;
-            } while(ok);
+                if (!matcher.matches() || board.posRepetida(msg)) rep = true;
+                else rep = false;
+            } while(rep);
 
             try {
                 ObjectOutputStream oos = new ObjectOutputStream(out);
