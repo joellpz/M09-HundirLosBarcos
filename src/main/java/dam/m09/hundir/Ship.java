@@ -5,18 +5,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Ship implements Serializable {
-    int length;
-    List<String> positions;
-    List<Boolean> touched;
-    boolean destroyed;
+    private int length;
+    private List<String> positions;
+    private List<Boolean> touched;
+    private boolean destroyed;
 
     public Ship(int length, List<String> positions) {
         this.length = length;
-        this.positions = positions;
-        touched = new ArrayList<>();
-        for (int i = 0; i < positions.size(); i++) {
-            touched.add(false);
-        }
+        setPositions(positions);
+        destroyed = false;
+    }
+
+    public Ship(int length) {
+        this.length = length;
         destroyed = false;
     }
 
@@ -32,4 +33,23 @@ public class Ship implements Serializable {
         return !touched.contains(false);
     }
 
+    public int getLength() {
+        return length;
+    }
+
+    public List<String> getPositions() {
+        return positions;
+    }
+
+    public List<Boolean> getTouched() {
+        return touched;
+    }
+
+    public void setPositions(List<String> positions) {
+        this.positions = positions;
+        touched = new ArrayList<>();
+        for (int i = 0; i < positions.size(); i++) {
+            touched.add(false);
+        }
+    }
 }

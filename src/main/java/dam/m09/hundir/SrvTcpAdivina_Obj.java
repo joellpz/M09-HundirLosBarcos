@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Random;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -13,10 +14,16 @@ public class SrvTcpAdivina_Obj {
      * */
     private int port;
     private int rnd;
+    private Board board;
 
-    private SrvTcpAdivina_Obj(int port) {
+    private SrvTcpAdivina_Obj(int port, int rnd) {
         this.port = port;
-        this.rnd = new Random().nextInt(3);
+        this.rnd = rnd;
+    }
+
+    public SrvTcpAdivina_Obj(int port, Board board) {
+        this.port = port;
+        this.board = board;
     }
 
     private void listen() {
@@ -24,9 +31,12 @@ public class SrvTcpAdivina_Obj {
         Socket clientSocket;
         try {
             serverSocket = new ServerSocket(port);
-            while(true) {
+            while (true) {
                 clientSocket = serverSocket.accept();
-                ThreadSevidorAdivina_Obj FilServidor = new ThreadSevidorAdivina_Obj(clientSocket, new Board(rnd));
+                ThreadSevidorAdivina_Obj FilServidor;
+                if (board == null) FilServidor = new ThreadSevidorAdivina_Obj(clientSocket, new Board(rnd));
+                else FilServidor = new ThreadSevidorAdivina_Obj(clientSocket, board);
+
                 Thread client = new Thread(FilServidor);
                 client.start();
             }
@@ -35,8 +45,23 @@ public class SrvTcpAdivina_Obj {
         }
     }
 
+
     public static void main(String[] args) {
-        SrvTcpAdivina_Obj srv = new SrvTcpAdivina_Obj(5558);
+        Scanner sc = new Scanner(System.in);
+        String opt;
+        SrvTcpAdivina_Obj srv;
+        do {
+            System.out.println("Do you want to define the ships (D) or a random board (R)");
+            opt = sc.nextLine();
+            if (!opt.equalsIgnoreCase("D") && !opt.equalsIgnoreCase("R")) {
+                System.out.println(" ** ERROR. BAD ARGUMENT, Try again! **");
+            }
+        } while (!opt.equalsIgnoreCase("D") && !opt.equalsIgnoreCase("R"));
+
+        if (opt.equalsIgnoreCase("R")) {
+            srv = new SrvTcpAdivina_Obj(5558, new Random().nextInt(3));
+        } else srv = new SrvTcpAdivina_Obj(5558, new Board());
+
         srv.listen();
     }
 }
