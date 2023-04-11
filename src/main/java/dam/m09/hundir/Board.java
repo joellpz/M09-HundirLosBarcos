@@ -69,6 +69,7 @@ public class Board implements Serializable {
         int[] lenghts = new int[]{1, 3, 2, 1, 1};
         for (int i = 0; i < lenghts.length; i++) {
             for (int j = 0; j < lenghts[i]; j++) {
+                showBoardWithBoats();
                 do {
                     rep = false;
                     System.out.println(" ** Define the orientation of the ship (H/V) ** ");
@@ -80,7 +81,7 @@ public class Board implements Serializable {
                 } while (rep);
                 do {
                     rep = false;
-                    showBoardWithBoats();
+
                     System.out.println(" ** Write the Column to put the Ship (length:" + (i + 1) + ") **");
                     letter = sc.nextLine();
                     if (!letter.equalsIgnoreCase("a") && !letter.equalsIgnoreCase("b") && !letter.equalsIgnoreCase("c") &&
