@@ -1,0 +1,108 @@
+Index: src/main/java/dam/m09/hundir/TCPSocketClient.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package dam.m09.hundir;\n\nimport java.io.BufferedReader;\nimport java.io.IOException;\nimport java.io.InputStreamReader;\nimport java.io.PrintStream;\nimport java.net.InetAddress;\nimport java.net.Socket;\nimport java.net.UnknownHostException;\nimport java.util.Scanner;\nimport java.util.logging.Level;\nimport java.util.logging.Logger;\n\n\npublic class TCPSocketClient{\n\n    private final Scanner sc = new Scanner(System.in);\n    public void connect(String address, int port) {\n        String serverData;\n        String request;\n        boolean continueConnected=true;\n        Socket socket;\n        BufferedReader in;\n        PrintStream out;\n        try {\n            socket = new Socket(InetAddress.getByName(address), port);\n            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));\n            out = new PrintStream(socket.getOutputStream());\n//el client atén el port fins que decideix finalitzar\n            while(continueConnected){\n                serverData = in.readLine();\n//processament de les dades rebudes i obtenció d'una nova petició\n                request = getRequest(serverData);\n//enviament de la petició\n                out.println(request);//assegurem que acaba amb un final de línia\n                out.flush(); //assegurem que s'envia\n//comprovem si la petició és un petició de finalització i en cas\n//que ho sigui ens preparem per sortir del bucle\n                continueConnected = mustFinish(request);\n            }\n\n            close(socket);\n        } catch (UnknownHostException ex) {\n            System.out.println(\"Error de connexió. No existeix el host \" + ex);\n        } catch (IOException ex) {\n            System.out.println(\"Error de connexió indefinit \"+ ex);\n        }\n    }\n\n    private boolean mustFinish(String request) {\n        return !request.equals(\"bye\");\n    }\n\n    private String getRequest(String serverData) {\n        System.out.println(serverData);\n        return sc.nextLine();\n    }\n\n    private void close(Socket socket){\n//si falla el tancament no podem fer gaire cosa, només enregistrar\n//el problema\n        try {\n//tancament de tots els recursos\n            if(socket!=null && !socket.isClosed()){\n                if(!socket.isInputShutdown()){\n                    socket.shutdownInput();\n                }\n                if(!socket.isOutputShutdown()){\n                    socket.shutdownOutput();\n                }\n                socket.close();\n            }\n        } catch (IOException ex) {\n//enregistrem l'error amb un objecte Logger\n            Logger.getLogger(TCPSocketClient.class.getName()).log(Level.SEVERE, null, ex);\n        }\n    }\n\n    public static void main(String[] args) {\n        TCPSocketClient client = new TCPSocketClient();\n        client.connect(\"localhost\",9090);\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/dam/m09/hundir/TCPSocketClient.java b/src/main/java/dam/m09/hundir/TCPSocketClient.java
+--- a/src/main/java/dam/m09/hundir/TCPSocketClient.java	(revision 9d0e99ba347a57c2de94d2b63342a7a89b46d1ab)
++++ b/src/main/java/dam/m09/hundir/TCPSocketClient.java	(date 1679680245675)
+@@ -78,6 +78,6 @@
+ 
+     public static void main(String[] args) {
+         TCPSocketClient client = new TCPSocketClient();
+-        client.connect("localhost",9090);
++        client.connect("192.168.22.111",9090);
+     }
+ }
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"AutoImportSettings\">\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\n  </component>\n  <component name=\"ChangeListManager\">\n    <list default=\"true\" id=\"1a09afd5-2282-4c45-8d45-7122766ce0a7\" name=\"Changes\" comment=\"initi\">\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/org/example/ClientMulticastUDP.java\" beforeDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/org/example/ClientTcpAdivina_Obj.java\" beforeDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/org/example/Main.java\" beforeDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/org/example/SecretNum.java\" beforeDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/org/example/ServidorMulticastUDP.java\" beforeDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/org/example/SrvTcpAdivina_Obj.java\" beforeDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/org/example/Tauler.java\" beforeDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/org/example/ThreadSevidorAdivina_Obj.java\" beforeDir=\"false\" />\n    </list>\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\n  </component>\n  <component name=\"MarkdownSettingsMigration\">\n    <option name=\"stateVersion\" value=\"1\" />\n  </component>\n  <component name=\"MavenImportPreferences\">\n    <option name=\"importingSettings\">\n      <MavenImportingSettings>\n        <option name=\"workspaceImportEnabled\" value=\"true\" />\n      </MavenImportingSettings>\n    </option>\n  </component>\n  <component name=\"ProjectId\" id=\"2NTE8pc8Bi9l7au08xvXlZHhwaq\" />\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\n  <component name=\"ProjectViewState\">\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\n    <option name=\"showLibraryContents\" value=\"true\" />\n  </component>\n  <component name=\"PropertiesComponent\"><![CDATA[{\n  \"keyToString\": {\n    \"RunOnceActivity.OpenProjectViewOnStart\": \"true\",\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\n    \"last_opened_file_path\": \"/home/dam2a/Documents/Joel/HundirLosBarcos/src/main/java/org/example\"\n  }\n}]]></component>\n  <component name=\"RecentsManager\">\n    <key name=\"CopyFile.RECENT_KEYS\">\n      <recent name=\"$PROJECT_DIR$/src/main/java/org/example\" />\n    </key>\n  </component>\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\n  <component name=\"TaskManager\">\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\n      <changelist id=\"1a09afd5-2282-4c45-8d45-7122766ce0a7\" name=\"Changes\" comment=\"\" />\n      <created>1679679515711</created>\n      <option name=\"number\" value=\"Default\" />\n      <option name=\"presentableId\" value=\"Default\" />\n      <updated>1679679515711</updated>\n    </task>\n    <task id=\"LOCAL-00001\" summary=\"initi\">\n      <created>1679679603567</created>\n      <option name=\"number\" value=\"00001\" />\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1679679603567</updated>\n    </task>\n    <task id=\"LOCAL-00002\" summary=\"initi\">\n      <created>1679679670857</created>\n      <option name=\"number\" value=\"00002\" />\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1679679670857</updated>\n    </task>\n    <option name=\"localTasksCounter\" value=\"3\" />\n    <servers />\n  </component>\n  <component name=\"VcsManagerConfiguration\">\n    <MESSAGE value=\"initi\" />\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"initi\" />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 9d0e99ba347a57c2de94d2b63342a7a89b46d1ab)
++++ b/.idea/workspace.xml	(date 1679681447831)
+@@ -5,20 +5,18 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="1a09afd5-2282-4c45-8d45-7122766ce0a7" name="Changes" comment="initi">
+-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/ClientMulticastUDP.java" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/ClientTcpAdivina_Obj.java" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/SecretNum.java" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/ServidorMulticastUDP.java" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/SrvTcpAdivina_Obj.java" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Tauler.java" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/ThreadSevidorAdivina_Obj.java" beforeDir="false" />
++      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/dam/m09/hundir/TCPSocketClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dam/m09/hundir/TCPSocketClient.java" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+     <option name="LAST_RESOLUTION" value="IGNORE" />
+   </component>
++  <component name="Git.Settings">
++    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
++  </component>
+   <component name="MarkdownSettingsMigration">
+     <option name="stateVersion" value="1" />
+   </component>
+@@ -39,6 +37,7 @@
+   "keyToString": {
+     "RunOnceActivity.OpenProjectViewOnStart": "true",
+     "RunOnceActivity.ShowReadmeOnStart": "true",
++    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+     "last_opened_file_path": "/home/dam2a/Documents/Joel/HundirLosBarcos/src/main/java/org/example"
+   }
+ }]]></component>
+Index: README.md
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+># M09-HundirLosBarcos\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/README.md b/README.md
+--- a/README.md	(revision 9d0e99ba347a57c2de94d2b63342a7a89b46d1ab)
++++ b/README.md	(date 1679681446287)
+@@ -1,1 +1,15 @@
+ # M09-HundirLosBarcos
++
++Matriz 8x8
++
++Tipos de Barcos:
++1x5 casillas
++1x4 casillas
++2x3 casillas
++3x2 casillas
++1x1 casillas
++
++- El cliente solo recibira como dato si és su turno o no.
++- El servidor se encarga de recibir la posición que quiere atacar el cliente, y la envía al Tablero para que se compruebe si ha dado a un barco o no.
++- Clase Tablero con la posicion de los barcos y los propios barcos.
++- Clase Barco 
+\ No newline at end of file
+Index: .idea/encodings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/encodings.xml b/.idea/encodings.xml
+new file mode 100644
+--- /dev/null	(date 1679680195154)
++++ b/.idea/encodings.xml	(date 1679680195154)
+@@ -0,0 +1,7 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="Encoding">
++    <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
++    <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
++  </component>
++</project>
+\ No newline at end of file

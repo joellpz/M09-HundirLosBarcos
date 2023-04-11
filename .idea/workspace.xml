@@ -5,11 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1a09afd5-2282-4c45-8d45-7122766ce0a7" name="Changes" comment="initi">
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/dam/m09/hundir/Boat.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dam/m09/hundir/Desk.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dam/m09/hundir/Desk.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dam/m09/hundir/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dam/m09/hundir/Board.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dam/m09/hundir/ClientTcpAdivina_Obj.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dam/m09/hundir/ClientTcpAdivina_Obj.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,15 +21,11 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
-  </component>
-  <component name="MavenImportPreferences">
-    <option name="importingSettings">
-      <MavenImportingSettings>
-        <option name="workspaceImportEnabled" value="true" />
-      </MavenImportingSettings>
-    </option>
   </component>
   <component name="ProjectId" id="2NTE8pc8Bi9l7au08xvXlZHhwaq" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -44,14 +38,31 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "last_opened_file_path": "/home/dam2a/Documents/Joel/HundirLosBarcos/src/main/java/dam/m09/hundir"
+    "last_opened_file_path": "C:/Users/OrigamiSoft/IdeaProjects/M09-HundirLosBarcos",
+    "settings.editor.selected.configurable": "preferences.lookFeel"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/main/java/dam/m09/hundir" />
+      <recent name="C:\Users\OrigamiSoft\IdeaProjects\M09-HundirLosBarcos\src\main\java\dam\m09\hundir" />
       <recent name="$PROJECT_DIR$/src/main/java/org/example" />
     </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="dam.m09.hundir" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -77,20 +88,69 @@
       <updated>1679679670857</updated>
     </task>
     <task id="LOCAL-00003" summary="initi">
-      <created>1679680188542</created>
+      <created>1681053569346</created>
       <option name="number" value="00003" />
       <option name="presentableId" value="LOCAL-00003" />
       <option name="project" value="LOCAL" />
-      <updated>1679680188542</updated>
+      <updated>1681053569346</updated>
     </task>
     <task id="LOCAL-00004" summary="initi">
-      <created>1679680516375</created>
+      <created>1681054278259</created>
       <option name="number" value="00004" />
       <option name="presentableId" value="LOCAL-00004" />
       <option name="project" value="LOCAL" />
-      <updated>1679680516375</updated>
+      <updated>1681054278259</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="initi">
+      <created>1681055917660</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1681055917660</updated>
+    </task>
+    <task id="LOCAL-00006" summary="initi">
+      <created>1681058295655</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1681058295655</updated>
+    </task>
+    <task id="LOCAL-00007" summary="initi">
+      <created>1681059876416</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1681059876416</updated>
+    </task>
+    <task id="LOCAL-00008" summary="initi">
+      <created>1681123688519</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1681123688519</updated>
+    </task>
+    <task id="LOCAL-00009" summary="initi">
+      <created>1681123837871</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1681123837871</updated>
+    </task>
+    <task id="LOCAL-00010" summary="initi">
+      <created>1681125192819</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1681125192819</updated>
+    </task>
+    <task id="LOCAL-00011" summary="initi">
+      <created>1681125698538</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1681125698538</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
