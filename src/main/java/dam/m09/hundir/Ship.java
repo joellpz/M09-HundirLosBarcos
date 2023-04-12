@@ -21,6 +21,13 @@ public class Ship implements Serializable {
         destroyed = false;
     }
 
+    public Ship(Ship ship) {
+        length = ship.getLength();
+        destroyed = ship.isDestroyed();
+        positions = new ArrayList<>(ship.getPositions());
+        touched = new ArrayList<>(ship.getTouched());
+    }
+
     public boolean isTouched(String pos) {
         if (positions.contains(pos.toLowerCase())) {
             touched.set(positions.indexOf(pos.toLowerCase()), true);

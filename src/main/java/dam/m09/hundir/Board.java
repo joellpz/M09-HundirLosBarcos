@@ -7,19 +7,20 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Board implements Serializable {
-    String[][] board = new String[8][8];
+    private String[][] board = new String[8][8];
 
     /* El tablero se define por 4 posibles valores en cada posición.
      null. Indica que esa casilla esta vacia.
      O. Indica posicion vacia ya marcada.
      X. Indica Ship tocado.
     */
-    List<Ship> ships;
-    boolean fin, touched;
+    private List<Ship> ships;
+    private boolean fin, touched, destroyed;
 
     public Board(int num) {
         fin = false;
         touched = false;
+        destroyed = false;
         switch (num) {
             case 0 -> ships = new ArrayList<>(List.of(
                     new Ship(5, new ArrayList<>(Arrays.asList("a1", "b1", "c1", "d1", "e1"))),
@@ -58,7 +59,20 @@ public class Board implements Serializable {
         ships = new ArrayList<>();
         fin = false;
         touched = false;
+        destroyed = false;
         buildBoard();
+    }
+
+    public Board(Board board) {
+        fin = false;
+        touched = false;
+        destroyed = false;
+        ships = new ArrayList<>();
+
+        for (Ship ship : board.ships) {
+            ships.add(new Ship(ship));
+        }
+
     }
 
     public void buildBoard() {
@@ -97,7 +111,7 @@ public class Board implements Serializable {
                             if (number < 0 || number > 7) {
                                 throw new NumberFormatException();
                             }
-                            if (!ubicarShip(new Ship(i + 1), letter.concat(number + ""), orient)){
+                            if (!ubicarShip(new Ship(i + 1), letter.concat(number + ""), orient)) {
                                 throw new Exception();
                             }
                         } catch (Exception e) {
@@ -107,7 +121,6 @@ public class Board implements Serializable {
 
                     }
                 } while (rep);
-
             }
         }
     }
@@ -193,6 +206,7 @@ public class Board implements Serializable {
     }
 
     public void input(String pos) {
+        destroyed = false;
         if (!(touched = checkIfBoat(pos))) {
             board[getRow(pos)][traduceLetter(pos)] = "O";
             fin = isFinished();
@@ -201,7 +215,10 @@ public class Board implements Serializable {
 
     public boolean checkIfBoat(String pos) {
         for (Ship ship : ships) {
-            if (ship.isTouched(pos)) return true;
+            if (ship.isTouched(pos)) {
+                if (ship.isDestroyed()) destroyed = true;
+                return true;
+            }
         }
         return false;
     }
@@ -246,7 +263,27 @@ public class Board implements Serializable {
     }
 
     public boolean posRepetida(String pos) {
-        if (board[Integer.parseInt(pos.split("")[1])][traduceLetter(pos.split("")[0])] == null) return false;
+        if (board[getRow(pos)][traduceLetter(pos)] == null) return false;
         else return true;
+    }
+
+    public List<Ship> getShips() {
+        return ships;
+    }
+
+    public String[][] getBoard() {
+        return board;
+    }
+
+    public boolean isFin() {
+        return fin;
+    }
+
+    public boolean isTouched() {
+        return touched;
+    }
+
+    public boolean isDestroyed() {
+        return destroyed;
     }
 }

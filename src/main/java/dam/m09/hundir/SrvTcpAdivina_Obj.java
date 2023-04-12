@@ -31,11 +31,12 @@ public class SrvTcpAdivina_Obj {
         Socket clientSocket;
         try {
             serverSocket = new ServerSocket(port);
+            System.out.println(" ** Taulell acabat, esperant als Jugadors **");
             while (true) {
                 clientSocket = serverSocket.accept();
                 ThreadSevidorAdivina_Obj FilServidor;
                 if (board == null) FilServidor = new ThreadSevidorAdivina_Obj(clientSocket, new Board(rnd));
-                else FilServidor = new ThreadSevidorAdivina_Obj(clientSocket, board);
+                else FilServidor = new ThreadSevidorAdivina_Obj(clientSocket, new Board(board));
 
                 Thread client = new Thread(FilServidor);
                 client.start();

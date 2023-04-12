@@ -40,29 +40,31 @@ public class ClientTcpAdivina_Obj extends Thread {
     public void run() {
         String msg = null;
         boolean rep;
-        while(continueConnected){
+        while (continueConnected) {
             //Llegir info del servidor (estat del board)
             board = getRequest();
 
-            if(firstTry){
+            //Mostrar el tablero al cliente
+            board.showBoardNoBoats();
+
+            if (firstTry) {
                 System.out.println("Comença la partida!");
                 firstTry = false;
-            }else{
+            } else {
                 //Llegir condicions
-                if(board.touched){
-                    System.out.println("Has tocat un vaixell!");
-                }else{
+                if (board.isTouched()) {
+                    if (board.isDestroyed()) System.out.println("BOOOOOM - Vaixell destruït!!");
+                    else System.out.println("Has tocat un vaixell!");
+                } else {
                     System.out.println("No s'ha tocat cap vaixell...");
                 }
 
-                if(board.fin){
+                if (board.isFin()) {
                     System.out.println("S'ha acabat la partida! Tots els vaixells s'han enfonsat!");
                     continueConnected = false;
                 }
             }
 
-            //Mostrar el tablero al cliente
-            board.showBoardNoBoats();
 
             //Pedir una posicion
             do {
@@ -75,10 +77,11 @@ public class ClientTcpAdivina_Obj extends Thread {
                 //Comproba si s'escull una posició ja marcada
                 if (!matcher.matches() || board.posRepetida(msg)) {
                     rep = true;
-                    if(!matcher.matches()) System.out.println(" ** Escriu la posició amb el format indicat a l'exemple ** ");
+                    if (!matcher.matches())
+                        System.out.println(" ** Escriu la posició amb el format indicat a l'exemple ** ");
                     else System.out.println(" ** Escriu una posició no seleccionada anteriorment ** ");
-                }else rep = false;
-            } while(rep);
+                } else rep = false;
+            } while (rep);
 
             try {
                 ObjectOutputStream oos = new ObjectOutputStream(out);
@@ -90,6 +93,7 @@ public class ClientTcpAdivina_Obj extends Thread {
         }
         close(socket);
     }
+
     private Board getRequest() {
         try {
             ObjectInputStream ois = new ObjectInputStream(in);
@@ -101,16 +105,16 @@ public class ClientTcpAdivina_Obj extends Thread {
     }
 
 
-    private void close(Socket socket){
+    private void close(Socket socket) {
         //si falla el tancament no podem fer gaire cosa, només enregistrar
         //el problema
         try {
             //tancament de tots els recursos
-            if(socket!=null && !socket.isClosed()){
-                if(!socket.isInputShutdown()){
+            if (socket != null && !socket.isClosed()) {
+                if (!socket.isInputShutdown()) {
                     socket.shutdownInput();
                 }
-                if(!socket.isOutputShutdown()){
+                if (!socket.isOutputShutdown()) {
                     socket.shutdownOutput();
                 }
                 socket.close();
@@ -131,7 +135,7 @@ public class ClientTcpAdivina_Obj extends Thread {
         System.out.println("Nom jugador:");
         jugador = sip.next();
 
-        ClientTcpAdivina_Obj clientTcp = new ClientTcpAdivina_Obj(ipSrv,5558);
+        ClientTcpAdivina_Obj clientTcp = new ClientTcpAdivina_Obj(ipSrv, 5558);
         clientTcp.Nom = jugador;
         clientTcp.start();
     }
