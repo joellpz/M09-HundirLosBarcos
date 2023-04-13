@@ -8,7 +8,6 @@ import java.util.Scanner;
 
 public class Board implements Serializable {
     private String[][] board = new String[8][8];
-
     /* El tablero se define por 4 posibles valores en cada posición.
      null. Indica que esa casilla esta vacia.
      O. Indica posicion vacia ya marcada.
@@ -209,14 +208,18 @@ public class Board implements Serializable {
         destroyed = false;
         if (!(touched = checkIfBoat(pos))) {
             board[getRow(pos)][traduceLetter(pos)] = "O";
-            fin = isFinished();
-        } else board[getRow(pos)][traduceLetter(pos)] = "X";
+        } else {
+            board[getRow(pos)][traduceLetter(pos)] = "X";
+        }
     }
 
     public boolean checkIfBoat(String pos) {
         for (Ship ship : ships) {
             if (ship.isTouched(pos)) {
-                if (ship.isDestroyed()) destroyed = true;
+                if (ship.isDestroyed()) {
+                    destroyed = true;
+                    fin = isFinished();
+                }
                 return true;
             }
         }

@@ -19,7 +19,7 @@ public class ClientTcpAdivina_Obj extends Thread {
     private boolean continueConnected;
     private Board board;
     private boolean firstTry = true;
-    Pattern pattern = Pattern.compile("[a-h][0-7]");
+    Pattern pattern = Pattern.compile("[a-hA-H][0-7]");
     Matcher matcher;
 
     private ClientTcpAdivina_Obj(String hostname, int port) {
@@ -65,30 +65,31 @@ public class ClientTcpAdivina_Obj extends Thread {
                 }
             }
 
+            if(continueConnected){
+                //Pedir una posicion
+                do {
+                    System.out.print("Quina posició del taulell vols atacar? Ex. (a1): ");
 
-            //Pedir una posicion
-            do {
-                System.out.print("Quina posició del taulell vols atacar? Ex. (a1): ");
+                    //Comproba si s'escull una posició correcte
+                    msg = scin.next();
+                    matcher = pattern.matcher(msg);
 
-                //Comproba si s'escull una posició correcte
-                msg = scin.next();
-                matcher = pattern.matcher(msg);
+                    //Comproba si s'escull una posició ja marcada
+                    if (!matcher.matches() || board.posRepetida(msg)) {
+                        rep = true;
+                        if (!matcher.matches())
+                            System.out.println(" ** Escriu la posició amb el format indicat a l'exemple ** ");
+                        else System.out.println(" ** Escriu una posició no seleccionada anteriorment ** ");
+                    } else rep = false;
+                } while (rep);
 
-                //Comproba si s'escull una posició ja marcada
-                if (!matcher.matches() || board.posRepetida(msg)) {
-                    rep = true;
-                    if (!matcher.matches())
-                        System.out.println(" ** Escriu la posició amb el format indicat a l'exemple ** ");
-                    else System.out.println(" ** Escriu una posició no seleccionada anteriorment ** ");
-                } else rep = false;
-            } while (rep);
-
-            try {
-                ObjectOutputStream oos = new ObjectOutputStream(out);
-                oos.writeObject(msg);
-                out.flush();
-            } catch (IOException e) {
-                e.printStackTrace();
+                try {
+                    ObjectOutputStream oos = new ObjectOutputStream(out);
+                    oos.writeObject(msg);
+                    out.flush();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
         close(socket);

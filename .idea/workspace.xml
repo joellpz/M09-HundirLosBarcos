@@ -8,8 +8,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dam/m09/hundir/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dam/m09/hundir/Board.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dam/m09/hundir/ClientTcpAdivina_Obj.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dam/m09/hundir/ClientTcpAdivina_Obj.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dam/m09/hundir/Ship.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dam/m09/hundir/Ship.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dam/m09/hundir/SrvTcpAdivina_Obj.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dam/m09/hundir/SrvTcpAdivina_Obj.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,13 +52,9 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration default="true" type="JetRunConfigurationType">
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <option name="filePath" />
+    <configuration name="Unnamed" type="Application" factoryName="Application" singleton="false" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="dam.m09.hundir.ClientTcpAdivina_Obj" />
+      <module name="HundirLosBarcos" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -169,12 +163,5 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="initi" />
     <option name="LAST_COMMIT_MESSAGE" value="initi" />
-  </component>
-  <component name="XDebuggerManager">
-    <pin-to-top-manager>
-      <pinned-members>
-        <PinnedItemInfo parentTag="dam.m09.hundir.Ship" memberName="length" />
-      </pinned-members>
-    </pin-to-top-manager>
   </component>
 </project>
